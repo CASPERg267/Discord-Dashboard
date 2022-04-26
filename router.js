@@ -1,11 +1,16 @@
-module.exports = (app, config, themeConfig, modules) => {
+module.exports = async (app, config, themeConfig, modules) => {
     app.use((req,res,next)=>{
         req.bot = config.bot;
         next();
     });
     app.use('/discord', require('./Routes/discord')(app, config, themeConfig, modules));
 
-    if (config.useUnderMaintenance) {
+    let info;
+    if(themeConfig?.customThemeOptions?.info) {
+        info = await themeConfig.customThemeOptions.info({req: {}, res: {}, config: {}});
+    }
+
+    if (info.useUnderMaintenance) {
         app.get(config.underMaintenanceAccessPage || '/total-secret-get-access', (req, res) => {
             res.send(`
                <form action="${config.domain}${config.underMaintenanceAccessPage || '/total-secret-get-access'}" method="POST" >
