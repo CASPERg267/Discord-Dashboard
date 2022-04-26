@@ -23,7 +23,12 @@ module.exports = (app, config, themeConfig, modules) => {
             res.redirect('/');
         });
 
-        app.use((req, res, next) => {
+        app.use(async (req, res, next) => {
+            let info;
+            if(themeConfig?.customThemeOptions?.info) {
+                info = await themeConfig.customThemeOptions.info({req: req, res: res, config: config, guildId: req.params.id});
+            }
+            
             if (!req.session.umaccess && !req.session.user) {
                 if(!config.useThemeMaintenance) return res.send(config.underMaintenanceCustomHtml || require('./underMaintenancePageDefault')(config.underMaintenance, false));
                 else res.render('maintenance', {
@@ -34,7 +39,7 @@ module.exports = (app, config, themeConfig, modules) => {
                     defaultMaintenanceConfig: config.underMaintenance || {}
                 });
             }
-            else if(!req.session.umaccess && config.ownerIDs && !config.ownerIDs.includes(req.session.user.id)) {
+            else if(!req.session.umaccess && info.ownerIDs && !info.ownerIDs.includes(req.session.user.id)) {
                 if(!config.useThemeMaintenance) return res.send(config.underMaintenanceCustomHtml || require('./underMaintenancePageDefault')(config.underMaintenance, true));
                 else res.render('maintenance', {
                     req: req,
