@@ -102,7 +102,7 @@ class DiscordDashboard {
             });
         }
 
-        await fastify.listen(80, '192.168.1.177');
+        await fastify.listen(80);
     }
 }
 
