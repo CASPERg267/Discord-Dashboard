@@ -1,52 +1,31 @@
 {
   "name": "discord-dashboard",
-  "version": "2.3.21",
-  "description": "The best way to create a Web Dashboard for your Discord Bot! No need to edit files or write the server from scratch!",
+  "version": "3.0.0-beta.0",
+  "description": "Discord-Dashboard v3 BETA",
   "main": "index.js",
-  "directories": {
-    "test": "test"
+  "scripts": {
+    "test": "nodemon test.js"
   },
-  "typings": ".d.ts",
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
   "dependencies": {
-    "assistants-safe-storage": "^1.0.0",
-    "body-parser": "^1.20.0",
-    "colors": "^1.4.0",
-    "discord-dashboard": "^2.3.16",
-    "discord-dashboard-pp-system": "^1.0.2",
+    "@fastify/cors": "^7.0.0",
+    "@fastify/oauth2": "^5.0.0",
     "discord-oauth2": "^2.10.0",
-    "discord.js": "^13.*.*",
-    "ejs": "^3.1.7",
+    "discord.js": "^13.6.0",
     "express": "^4.17.3",
-    "express-partials": "^0.3.0",
-    "express-rate-limit": "^6.3.0",
-    "express-session": "^1.17.2",
-    "https": "^1.0.0",
-    "node-fetch": "^2.6.7",
-    "readline-sync": "^1.4.10",
-    "socket.io": "^4.4.1",
+    "fastify": "^3.28.0",
+    "fastify-static": "^4.6.1",
+    "mongoose": "^6.3.1",
     "uuid": "^8.3.2"
   },
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "author": "breftejk",
-  "license": "CC BY-NC-SA 4.0",
-  "homepage": "https://assistantscenter.com/dbd-docs/",
-  "keywords": [
-    "discord",
-    "discord.js",
-    "discordjs",
-    "discord dashboard",
-    "discord web dashboard",
-    "web dashboard",
-    "dashboard"
-  ],
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/Assistants-Center/Discord.js-Web-Dashboard.git"
+  "nodemonConfig": {
+    "ignore": [
+      "node_modules/*"
+    ]
   },
   "devDependencies": {
-    "dbd-dark-dashboard": "^1.6.54",
-    "javascript-obfuscator": "^4.0.0"
+    "nodemon": "^2.0.16"
   }
 }

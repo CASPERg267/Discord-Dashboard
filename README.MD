@@ -1,57 +1,56 @@
-<img src="https://cdn.assistantscenter.com/kxlrosdn">
+# DBD v3 BETA (v3.0.0-beta.0)
 
-<p align="center"><img src="https://nodei.co/npm/discord-dashboard.png"></p>
-<p align="center"><img src="https://img.shields.io/npm/v/discord-dashboard"> <img src="https://img.shields.io/github/repo-size/breftejk/Discord.js-Web-Dashboard"> <img src="https://img.shields.io/badge/License-CC%20BY--NC--SA%204.0-green.svg"> <img src="https://img.shields.io/github/contributors/breftejk/Discord.js-Web-Dashboard?color=green"> <img src="https://img.shields.io/badge/node.js-16.6.0+-blue"> <img src="https://img.shields.io/github/package-json/dependency-version/breftejk/Discord.js-Web-Dashboard/discord.js"> <img src="https://img.shields.io/github/package-json/dependency-version/breftejk/Discord.js-Web-Dashboard/express"> </p>
-<p align="center"><a href="https://discord.gg/Nkc8MWxHRD"> <img src="https://discordapp.com/api/guilds/803034737261936670/widget.png" alt="Discord server"/></a></p>
-
-# Discord-Dashboard
-
-- Easier creation of a Dashboard for Bot using Node.js
-- No need to know how the API works, no need to write it
-- Easy configuration
-- Community support
-- Free for non-commercial use
-- Paid plans
-
-# Install
+## Install:
 
 ```js
-npm i discord-dashboard
-//or
-yarn add discord-dashboard
+npm i discord-dashboard discord-dashboard-reactclient
 ```
 
-# Get help
+or
 
-Join our Discord Support Server
+```js
+yarn add discord-dashboard discord-dashboard-reactclient
+```
 
-<a href="https://discord.gg/Nkc8MWxHRD"> <img src="https://discordapp.com/api/guilds/803034737261936670/widget.png" alt="Discord server"/></a>
+## Example Usage:
 
-# Documentation
+```js
+const DBD = require('discord-dashboard');
+const DBD_RC = require('discord-dashboard-reactclient');
 
-Full and continuously updated project documentation can be found at the URL: https://assistantscenter.com/dbd-docs/
+const {Client, Intents} = require('discord.js');
+const client = new Client({ intents: [Intents.FLAGS.GUILDS] });
 
-# Privacy Policy and Terms of Use
+const OAuth2AndUrls = {
+   OAuth2Client: {
+       id: '#',
+       secret: '#',
+   },
+   serverUrl: 'http://localhost',
+   clientUrl: 'http://localhost',
+}
 
-You can always find an updated privacy policy and terms of use for discord-dashboard under URL: https://assistantscenter.com/discord-dashboard-pp-tos/
+const Dashboard = new DBD.Dashboard({
+   ...OAuth2AndUrls,
+   discordJSClient: client,
+   optionsFolder: `${__dirname}/DashboardOptions`,
+   optionsReferences: {
+      exampleRef: null,
+   },
+   tokenStore: new DBD.TokenStores.MongoStore('mongo url'),
+});
 
-# Contact
+const DBD_Client = new DBD_RC({
+   ...OAuth2AndUrls,
+   websiteName: 'Assistants Center',
+});
 
-- **E-mail**: contact@assistantscenter.com, support@assistantscenter.com, billing@assistantscenter.com
-- **Discord**: https://discord.gg/Nkc8MWxHRD
+Dashboard.integrateClient(DBD_Client);
 
-# Licenses
+client.login('bot client token').then(()=>{
+   Dashboard.createServer();
+});
 
-The project is covered by a **Shareware (CC BY-NC-SA 4.0) licence**. This means that the project is theoretically free and limited, but it has a paid versions.
-
-### What types of shareware license does the discord-dashboard project fall under?
-
-- **OpenSource License**: Free. Personal usage only. Non-profit.
-- **Personal License**: Profit allowed. Personal usage only. Priority support from developers. Limited to major version: v2.*
-- **Production License**: Allowed for profit purposes. Distribution Allowed (you can share the license with your close friends). Priority support from developers. Limited to major version: v2.*
-
-#### You always have the latest news and the option to purchase license at the URL: https://licenses.assistantscenter.com/
-
-<hr>
+```
 
 © 2020-2022 Assistants Center, All rights reserved
