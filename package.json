@@ -13,8 +13,6 @@
     "@fastify/cors": "^7.0.0",
     "@fastify/oauth2": "^5.0.0",
     "discord-oauth2": "^2.10.0",
-    "discord.js": "^13.6.0",
-    "express": "^4.17.3",
     "fastify": "^3.28.0",
     "fastify-static": "^4.6.1",
     "mongoose": "^6.3.1",

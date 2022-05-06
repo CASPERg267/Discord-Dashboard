@@ -40,12 +40,19 @@ module.exports = ({fastify,settings}) => {
                 Guilds.push(new Promise(async (resolve, reject) => {
                     let onGuild = null;
                     try{
-                        await fastify.discordJSClient.guilds.fetch(guild.id);
-                        onGuild = true;
+                        const g = await fastify.discordJSClient.guilds.fetch(guild.id);
+                        onGuild = {
+                            mfaLevel: g.mfaLevel,
+                            premiumTier: g.premiumTier,
+                            premiumSubscriptionCount: g.premiumSubscriptionCount,
+                            memberCount: g.memberCount,
+                            verificationLevel: g.verificationLevel,
+                        };
                     }catch(err){
+                        console.log(err)
                         onGuild = false;
                     }
-                    resolve({...UserGuilds.find(g=>g.id==guild.id),onGuild});
+                    resolve({...UserGuilds.find(g=>g.id==guild.id),onGuild,});
                 }))
             }
             Guilds = await Promise.all(Guilds);
