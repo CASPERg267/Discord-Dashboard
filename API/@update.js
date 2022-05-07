@@ -11,30 +11,35 @@ module.exports = ({fastify,settings,options: options_func,optionsReferences}) =>
                     message: 'ERROR_NO_TOKEN',
                 });
 
-            const Categories  = Object.keys(options);
+            const erroredOptions=[];
+
+            const Categories = Object.keys(options);
             for(const Category of Categories){
                 const Options = Object.keys(options[Category]);
                 for(const Option of Options){
                     const OptionData = options[Category][Option];
-                    console.log(OptionData)
+                    const OptionFunc = (options_func.find(c=>c.id == Category)?.options || []).find(o=>o.id == Option);
 
-                    if(OptionData.type == 'TextInput'){
-                        const OptionFunc = (options_func.find(c=>c.id == Category)?.options || []).find(o=>o.id == Option);
-                        OptionFunc.setValue({
-                            newData: OptionData.value,
+                    if(
+                        OptionFunc.optionType.type == 'TextInput'
+                    ){
+                        const res = await OptionFunc.setValue({
+                            newData: OptionData,
                             guild_id,
                             member_id: User.id,
                             optionsReferences,
                         });
+                        if(res.error){
+                            erroredOptions.push({...res,category_id:Category,option_id: Option});
+                        }
                     }
 
                 }
             }
 
-            console.log(options)
-
             return {
                 success: true,
+                erroredOptions: erroredOptions[0] ? erroredOptions : null,
             };
         }
     })
